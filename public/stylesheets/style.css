@@ -1,0 +1,108 @@
+/* Bootstrap Navbar Custom */
+
+.navbar-default {
+  background-color: #45ade5;
+  border-color: #4689be;
+}
+.navbar-default .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #effdfe;
+}
+.navbar-default .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #effdfe;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #effdfe;
+  background-color: #4689be;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: #effdfe;
+  background-color: #4689be;
+}
+.navbar-default .navbar-toggle {
+  border-color: #4689be;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #4689be;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #effdfe;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ecf0f1;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #effdfe;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #effdfe;
+    background-color: #4689be;
+  }
+}
+
+/*======*/
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.tile {
+  padding: 5px;
+}
+
+.tileLink:hover > img {
+  border: 1px solid gray;
+}
+
+.tilesGroup {
+  margin-top: 10px;
+}
+
+.modal-dialog {
+  width: 1100px;
+}
+
+.modal-content {
+  width: 1100px;
+}
+
+.stackingMargin {
+  margin: 5px;
+}
+
+.redBorder {
+  border-color: red;
+}
+
+.greenBorder {
+  border-color: green;
+}
+
+.yellowBorder {
+  border-color: yellow;
+}

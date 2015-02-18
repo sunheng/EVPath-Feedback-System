@@ -1,0 +1,15 @@
+{
+  "name": "EVPathFeedbackSystem",
+  "version": "1.0.0",
+  "description": "Error Detection and Decision Adjustments",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sunheng Taing",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.11.2",
+    "socket.io": "^1.3.3"
+  }
+}
