@@ -1,7 +1,9 @@
 (function(){
-  var mainApp = angular.module('mainApp', []);
+  var dashboard = angular.module('dashboard', ['evpath_service']);
 
-  mainApp.controller('ImageTilesCtrl', function($scope){
+  dashboard.controller('ImageTilesCtrl', ['$rootScope', '$scope', 'socket', function($rootScope, $scope, socket){
+    
+    //SAMPLE IMAGES
     $scope.images = [
       {
         'name' : 'number1',
@@ -41,9 +43,28 @@
       $scope.prevIndex = index - 1 < 0 ? $scope.images.length - 1 : index - 1;
     };
 
-    $scope.markAndGo = function(currentIndex, nextIndex, borderClass) {
+    $scope.markAndNext = function(currentIndex, nextIndex, borderClass) {
       $scope.images[currentIndex].borderClass = borderClass;
       $scope.setCurrentImage(nextIndex);
+      var markedObject = {
+        currentIndex: currentIndex,
+        borderClass: borderClass
+      };
+      socket.emit('imageMarked', markedObject);
     };
-  });
+
+    socket.on('imageMarked', function(data) {
+      console.log(data);
+      $scope.images[data.currentIndex].borderClass = data.borderClass;
+    });
+
+    /* TO DO: PUSH IMAGE ONTO DASHBOARD
+    socket.emit('ready', null);
+    socket.on('newImage', function(data) {
+      console.log('newImage');
+      $scope.images.push(data);
+    });
+    */
+
+  }]);
 })();

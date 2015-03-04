@@ -9,4 +9,4 @@ app.use(express.static(__dirname + '/public'));
 
 var routes = require('./routes')(app);
 
-var events = require('./sockets')(io);
+var events = require('./dashboard_service/sockets')(io);

@@ -3,7 +3,27 @@ module.exports = function(io) {
 
     io.on('connection', function (socket) {
       console.log('connected to socket.io');
-      var client = new net.Socket();
+
+      //Sample test 
+      // socket.on('ready', function() {
+        // i = 0;
+        // while (i <= 3) {
+        //   socket.emit('newImage', {
+        //     'name' : 'added4',
+        //     'src' : 'images/tif3.tif',
+        //     'attributes' : 'attrbuteblah',
+        //     'borderClass' : ''
+        //   });
+        //   i++;
+        // }
+      // });
+      //END TEST
+
+      socket.on('imageMarked', function(data) {
+        io.sockets.emit('imageMarked', data);
+      });
+
+      // var client = new net.Socket();
       // client.connect(6813, "vogue1.cc.gatech.edu", function() {
       //     console.log('connected to evpath server');
       // });

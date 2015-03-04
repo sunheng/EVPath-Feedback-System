@@ -1,13 +1,15 @@
 <!doctype>
-<html ng-app="mainApp">
+<html ng-app="dashboard">
 <head>
   <title>EVPath Feedback System</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="javascripts/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
   <script type="text/javascript" src="javascripts/angular/angular.min.js"></script>
   <script type="text/javascript" src="javascripts/controllers/controllers.js"></script>
+  <script type="text/javascript" src="javascripts/services/evpath_service.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -32,9 +34,9 @@
   <br>
   <div ng-controller="ImageTilesCtrl">
     <div class="row">
-      <div class="col-sm-4" ng-repeat="image in images">
+      <div class="col-sm-3" ng-repeat="image in images">
         <a href="#" data-toggle="modal" data-target="#imageModal" ng-click="setCurrentImage($index)">
-          <img src="{{image.src}}" class="thumbnail img-responsive danger {{image.borderClass}}">
+          <img ng-src="{{image.src}}" class="thumbnail img-responsive danger {{image.borderClass}}">
         </a>
       </div>
     </div>
@@ -49,12 +51,12 @@
               <center><h4 class="modal-title" id="myModalLabel">{{currentImage.name}}</h4></center>
               </div>
               <div class="modal-body row">
-                  <img class="col-md-10" src="{{currentImage.src}}">
+                  <img class="col-md-10" ng-src="{{currentImage.src}}">
                   <div class="col-md-2">
                       <label class="col-md-12 stackingMargin">{{currentImage.attributes}}</label>
-                      <button type="button" class="btn btn-success col-md-12 stackingMargin" ng-click="markAndGo(currentIndex, nextIndex, 'greenBorder')">Not an Error</button>
-                      <button type="button" class="btn btn-warning col-md-12 stackingMargin" ng-click="markAndGo(currentIndex, nextIndex, 'yellowBorder')">Not Sure</button>
-                      <button type="button" class="btn btn-danger col-md-12 stackingMargin" ng-click="markAndGo(currentIndex, nextIndex, 'redBorder')">Error</button>
+                      <button type="button" class="btn btn-success col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'greenBorder')">Not an Error</button>
+                      <button type="button" class="btn btn-warning col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'yellowBorder')">Not Sure</button>
+                      <button type="button" class="btn btn-danger col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'redBorder')">Error</button>
                   </div>
 
               </div>
@@ -64,11 +66,5 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-  <script type="text/javascript">
-    var socket = io.connect();
-
-    // $('#basicModal').modal(options);
-  </script>
 </body>
 </html>

@@ -96,13 +96,13 @@ a {
 }
 
 .redBorder {
-  border-color: red;
+  border: 2px solid red;
 }
 
 .greenBorder {
-  border-color: green;
+  border: 2px solid green;
 }
 
 .yellowBorder {
-  border-color: yellow;
+  border: 2px solid orange;
 }
