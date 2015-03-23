@@ -1,0 +1,70 @@
+<!doctype>
+<html ng-app="dashboard">
+<head>
+  <title>EVPath Feedback System</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="javascripts/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/bootstrap/bootstrap.min.js"></script>
+  <script type="text/javascript" src="javascripts/angular/angular.min.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/controllers.js"></script>
+  <script type="text/javascript" src="javascripts/services/evpath_service.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">EVPath Feedback System</a>
+      </div>
+
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Dashboard</a></li>
+        <li><a href="#">Decision Tree</a></li>
+      </ul>
+      <p class="navbar-text navbar-right">
+        <!-- <a href="#" class="navbar-link"># In Queue</a> -->
+      </p>
+    </div>
+  </nav>
+    <!-- <div class="col-xs-8"> -->
+      <!-- <img src="images/P04092013_c1_d1_C001H001S0001015060.tif"> -->
+      <!-- <img alt="" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAsMAAAGhCAIAAAALOi7ZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QgLEhM6PUSGrwAAIABJREFUeNq8vcuSLEmWHKZ6jnlEZt5761Z3T/eAHAICAYRcEALsuOCWPzbzDfwP/gKXWJACoRDCBSkEBgPhADKY7qnu+4wIdztHuThmHh55q2t6ho+SlpaqyMwID3ez89CjqsY//dM//bM/+zMc/pGE3//PT/z09/1I0t/1Rz/x+o9+0I++vv/n8fU/8MW/9U9+9JVvL/v/u1cy86cv5ttfePXKq//8fTfhp+/qT3/oq8v+6V/+Ay/v25/+4X/46nqO"/> -->
+    <!-- </div> -->
+  <br>
+  <div ng-controller="ImageTilesCtrl">
+    <div class="row">
+      <div class="col-sm-3" ng-repeat="image in images">
+        <a href="#" data-toggle="modal" data-target="#imageModal" ng-click="setCurrentImage($index)">
+          <img ng-src="{{image.src}}" class="thumbnail img-responsive danger {{image.borderClass}}">
+        </a>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModal" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+              <button type="button" class="btn btn-default" ng-click="setCurrentImage(prevIndex)">Previous</button>
+              <button type="button" class="btn btn-primary" ng-click="setCurrentImage(nextIndex)">Next</button>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <center><h4 class="modal-title" id="myModalLabel">{{currentImage.name}}</h4></center>
+              </div>
+              <div class="modal-body row">
+                  <img class="col-md-10" ng-src="{{currentImage.src}}">
+                  <div class="col-md-2">
+                      <label class="col-md-12 stackingMargin">{{currentImage.attributes}}</label>
+                      <button type="button" class="btn btn-success col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'greenBorder')">Not an Error</button>
+                      <button type="button" class="btn btn-warning col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'yellowBorder')">Not Sure</button>
+                      <button type="button" class="btn btn-danger col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'redBorder')">Error</button>
+                  </div>
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
