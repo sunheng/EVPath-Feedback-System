@@ -23,7 +23,8 @@
         <li><a href="#">Decision Tree</a></li>
       </ul>
       <p class="navbar-text navbar-right">
-        <!-- <a href="#" class="navbar-link"># In Queue</a> -->
+        Hello, <%= user.local.username %>! |
+        <a href="/logout" class="navbar-link" type="button">Log Out</a>
       </p>
     </div>
   </nav>
@@ -31,6 +32,11 @@
       <!-- <img src="images/P04092013_c1_d1_C001H001S0001015060.tif"> -->
       <!-- <img alt="" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAsMAAAGhCAIAAAALOi7ZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QgLEhM6PUSGrwAAIABJREFUeNq8vcuSLEmWHKZ6jnlEZt5761Z3T/eAHAICAYRcEALsuOCWPzbzDfwP/gKXWJACoRDCBSkEBgPhADKY7qnu+4wIdztHuThmHh55q2t6ho+SlpaqyMwID3ez89CjqsY//dM//bM/+zMc/pGE3//PT/z09/1I0t/1Rz/x+o9+0I++vv/n8fU/8MW/9U9+9JVvL/v/u1cy86cv5ttfePXKq//8fTfhp+/qT3/oq8v+6V/+Ay/v25/+4X/46nqO"/> -->
     <!-- </div> -->
+  <!-- <p>
+    <strong>id</strong>: <%= user._id %><br>
+    <strong>username</strong>: <%= user.local.username %><br>
+    <strong>password</strong>: <%= user.local.password %>
+  </p> -->
   <br>
   <div ng-controller="ImageTilesCtrl">
     <div class="row">
@@ -45,10 +51,10 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
-              <button type="button" class="btn btn-default" ng-click="setCurrentImage(prevIndex)">Previous</button>
-              <button type="button" class="btn btn-primary" ng-click="setCurrentImage(nextIndex)">Next</button>
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <center><h4 class="modal-title" id="myModalLabel">{{currentImage.name}}</h4></center>
+                <button type="button" class="btn btn-default" ng-click="setCurrentImage(prevIndex)">Previous</button>
+                <button type="button" class="btn btn-primary" ng-click="setCurrentImage(nextIndex)">Next</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <center><h4 class="modal-title" id="myModalLabel">{{currentImage.name}}</h4></center>
               </div>
               <div class="modal-body row">
                   <img class="col-md-10" ng-src="{{currentImage.src}}">

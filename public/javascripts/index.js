@@ -1,31 +1,9 @@
-<!doctype>
-<html ng-app="dashboard">
-<head>
-  <title>EVPath Feedback System</title>
-  <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/login.css">
-  <script type="text/javascript" src="javascripts/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/bootstrap/bootstrap.min.js"></script>
-  <script src="javascripts/particles/particles.min.js"></script>
-  <style>
-  </style>
-</head>
-<body>
-  <form class="form-panel" action="/login" method="post">
-    <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
-    <input type="password" class="form-control" placeholder="Password" name="password" required>
-    <button class="btn btn-md btn-primary btn-block" type="submit">Log In</button>
-    <a href="/register" class="btn btn-md btn-success btn-block">Register</a>
-  </form>
-  <div id="particles-js">
-  </div>
+/* particlesJS('dom-id', params);
+/* @dom-id : set the html tag id [string, optional, default value : particles-js]
+/* @params: set the params [object, optional, default values : check particles.js] */
 
-  <script type="text/javascript">
-  /* particlesJS('dom-id', params);
-  /* @dom-id : set the html tag id [string, optional, default value : particles-js]
-  /* @params: set the params [object, optional, default values : check particles.js] */
-
-  /* config dom id (optional) + config particles params */
+/* config dom id (optional) + config particles params */
+$(document).ready(function() {
   particlesJS('particles-js', {
     particles: {
       color: '#fff',
@@ -87,6 +65,4 @@
     /* Retina Display Support */
     retina_detect: true
   });
-  </script>
-</body>
-</html>
+});

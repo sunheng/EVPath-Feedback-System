@@ -41,6 +41,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs'); // set up ejs for templating
 
 var routes = require('./routes')(app, passport);
 
