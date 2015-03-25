@@ -3,12 +3,12 @@
 <head>
   <title>EVPath Feedback System</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/dashboard.css">
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="javascripts/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/bootstrap/bootstrap.min.js"></script>
   <script type="text/javascript" src="javascripts/angular/angular.min.js"></script>
-  <script type="text/javascript" src="javascripts/controllers/controllers.js"></script>
+  <script type="text/javascript" src="javascripts/controllers/dashboard_controllers.js"></script>
   <script type="text/javascript" src="javascripts/services/evpath_service.js"></script>
 </head>
 <body>
@@ -19,11 +19,11 @@
       </div>
 
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
+        <li class="active"><a href="#">Dashboard <span class="badge">4</span></a></li>
         <li><a href="#">Decision Tree</a></li>
       </ul>
       <p class="navbar-text navbar-right">
-        Hello, <%= user.local.username %>! |
+        Hello, <%= user.username %>! |
         <a href="/logout" class="navbar-link" type="button">Log Out</a>
       </p>
     </div>
@@ -32,17 +32,12 @@
       <!-- <img src="images/P04092013_c1_d1_C001H001S0001015060.tif"> -->
       <!-- <img alt="" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAsMAAAGhCAIAAAALOi7ZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QgLEhM6PUSGrwAAIABJREFUeNq8vcuSLEmWHKZ6jnlEZt5761Z3T/eAHAICAYRcEALsuOCWPzbzDfwP/gKXWJACoRDCBSkEBgPhADKY7qnu+4wIdztHuThmHh55q2t6ho+SlpaqyMwID3ez89CjqsY//dM//bM/+zMc/pGE3//PT/z09/1I0t/1Rz/x+o9+0I++vv/n8fU/8MW/9U9+9JVvL/v/u1cy86cv5ttfePXKq//8fTfhp+/qT3/oq8v+6V/+Ay/v25/+4X/46nqO"/> -->
     <!-- </div> -->
-  <!-- <p>
-    <strong>id</strong>: <%= user._id %><br>
-    <strong>username</strong>: <%= user.local.username %><br>
-    <strong>password</strong>: <%= user.local.password %>
-  </p> -->
   <br>
   <div ng-controller="ImageTilesCtrl">
     <div class="row">
       <div class="col-sm-3" ng-repeat="image in images">
         <a href="#" data-toggle="modal" data-target="#imageModal" ng-click="setCurrentImage($index)">
-          <img ng-src="{{image.src}}" class="thumbnail img-responsive danger {{image.borderClass}}">
+          <img ng-src="{{image.src}}" class="thumbnail thumbnailBorder img-responsive danger {{image.borderClass}}">
         </a>
       </div>
     </div>
@@ -57,12 +52,40 @@
                 <center><h4 class="modal-title" id="myModalLabel">{{currentImage.name}}</h4></center>
               </div>
               <div class="modal-body row">
-                  <img class="col-md-10" ng-src="{{currentImage.src}}">
-                  <div class="col-md-2">
-                      <label class="col-md-12 stackingMargin">{{currentImage.attributes}}</label>
-                      <button type="button" class="btn btn-success col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'greenBorder')">Not an Error</button>
-                      <button type="button" class="btn btn-warning col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'yellowBorder')">Not Sure</button>
-                      <button type="button" class="btn btn-danger col-md-12 stackingMargin" ng-click="markAndNext(currentIndex, nextIndex, 'redBorder')">Error</button>
+                  <ul class="nav nav-tabs">
+                     <li class="active">
+                        <a href="#info" data-toggle="tab">
+                            Image Information
+                        </a>
+                     </li>
+                     <li><a href="#history" data-toggle="tab">History</a></li>
+                  </ul>
+                  <div class="tab-content">
+                     <div class="tab-pane fade in active smallUpperMargin" id="info">
+                        <img class="col-md-10 {{currentImage.borderClass}} thumbnail thumbnailBorder" ng-src="{{currentImage.src}}">
+                        <div class="col-md-2">
+                            <label class="col-md-12 stackingMargin">{{currentImage.attributes}}</label>
+                            <button type="button" class="btn btn-success col-md-12 stackingMargin" ng-click="decisionAction(currentIndex, nextIndex, 'Not an Error', 'greenBorder', '<%= user.username %>')">Not an Error</button>
+                            <button type="button" class="btn btn-warning col-md-12 stackingMargin" ng-click="decisionAction(currentIndex, nextIndex, 'Not Sure', 'yellowBorder', '<%= user.username %>')">Not Sure</button>
+                            <button type="button" class="btn btn-danger col-md-12 stackingMargin" ng-click="decisionAction(currentIndex, nextIndex, 'Error', 'redBorder', '<%= user.username %>')">Error</button>
+                        </div>
+                     </div>
+                     <div class="tab-pane fade smallUpperMargin" id="history">
+                        <div class="historyPane">
+                          <table class="table col-md-10">
+                            <tr>
+                              <th>Timestamp</th>
+                              <th>Username</th>
+                              <th>Decision</th>
+                            </tr>
+                            <tr class="warning" ng-repeat="changeset in currentImage.history">
+                              <td>{{changeset.timestamp}}</td>
+                              <td>{{changeset.username}}</td>
+                              <td>{{changeset.decision}}</td>
+                            </tr>
+                          </table>
+                        </div>
+                     </div>
                   </div>
 
               </div>

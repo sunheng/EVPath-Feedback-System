@@ -96,13 +96,28 @@ a {
 }
 
 .redBorder {
-  border: 2px solid red;
+  border-style: solid;
+  border-color: red;
 }
 
 .greenBorder {
-  border: 2px solid green;
+  border-style: solid;
+  border-color: green;
 }
 
 .yellowBorder {
-  border: 2px solid orange;
+  border-style: solid;
+  border-color: orange;
+}
+
+.thumbnailBorder {
+  border-width: 2px;
+}
+
+.smallUpperMargin {
+  margin-top: 15px;
+}
+
+.historyPane {
+  margin: 10px;
 }

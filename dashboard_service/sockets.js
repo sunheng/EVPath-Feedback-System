@@ -19,8 +19,12 @@ module.exports = function(io) {
       // });
       //END TEST
 
+      socket.on('newChangeset', function(data) {
+        socket.broadcast.emit('newChangeset', data);
+      });
+
       socket.on('imageMarked', function(data) {
-        io.sockets.emit('imageMarked', data);
+        socket.broadcast.emit('imageMarked', data);
       });
 
       // var client = new net.Socket();

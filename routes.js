@@ -22,8 +22,12 @@ module.exports = function (app, passport) {
 
   // Dashboard page
   app.get('/dashboard', isLoggedIn, function(req, res) {
-    console.log(req.user);
-    res.render('dashboard.ejs', { user: req.user});
+    // console.log(req.user);
+    //Expose only non confidential information to the client
+    var externalUser = {
+      username: req.user.local.username
+    };
+    res.render('dashboard.ejs', { user: externalUser});
   });
   
   // Logout
