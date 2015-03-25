@@ -51,10 +51,19 @@
     $scope.decisionAction = function(currentIndex, nextIndex, decisionString, borderClass, username) {
       var date = new Date();
       var dateString = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+      var rowClass;
+      if (decisionString === 'Not an Error') {
+        rowClass = 'success';
+      } else if (decisionString === 'Not Sure') {
+        rowClass = 'warning';
+      } else {
+        rowClass = 'danger';
+      }
       var changeset = {
         username: username,
         timestamp: dateString,
-        decision: decisionString
+        decision: decisionString,
+        rowClass: rowClass
       };
       addToHistory(currentIndex, changeset);
       markAndNext(currentIndex, nextIndex, borderClass);

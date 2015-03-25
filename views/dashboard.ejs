@@ -78,7 +78,7 @@
                               <th>Username</th>
                               <th>Decision</th>
                             </tr>
-                            <tr class="warning" ng-repeat="changeset in currentImage.history">
+                            <tr class="{{changeset.rowClass}}" ng-repeat="changeset in currentImage.history">
                               <td>{{changeset.timestamp}}</td>
                               <td>{{changeset.username}}</td>
                               <td>{{changeset.decision}}</td>
