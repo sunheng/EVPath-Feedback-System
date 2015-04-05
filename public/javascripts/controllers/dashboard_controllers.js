@@ -96,13 +96,11 @@
       $scope.images[data.currentIndex].borderClass = data.borderClass;
     });
 
-    /* TO DO: PUSH IMAGE ONTO DASHBOARD
-    socket.emit('ready', null);
-    socket.on('newImage', function(data) {
-      console.log('newImage');
-      $scope.images.push(data);
+    socket.on('newFile', function(data) {
+      data.data.base64_file_buf = 'data:image/jpeg;base64,' + data.data.base64_file_buf;
+      $scope.images[0].src = data.data.base64_file_buf;
+      console.log(data);
     });
-    */
 
   }]);
 })();
