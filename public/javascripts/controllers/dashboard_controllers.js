@@ -1,38 +1,37 @@
 (function(){
   var dashboard = angular.module('dashboard', ['evpath_service']);
 
-  dashboard.controller('ImageTilesCtrl', ['$rootScope', '$scope', 'socket', function($rootScope, $scope, socket){
+  dashboard.controller('ImageTilesCtrl', ['$scope', 'socket', function($scope, socket){
     
-    //SAMPLE IMAGES
     $scope.images = [
-      {
-        name : 'ImageName1',
-        src : 'images/tif1.tif',
-        attributes : 'sampleAttribute1',
-        borderClass : '',
-        history: []
-      },
-      {
-        name : 'ImageName2',
-        src : 'images/tif2.tif',
-        attributes : 'sampleAttribute2',
-        borderClass : '',
-        history: []
-      },
-      {
-        name : 'ImageName3',
-        src : 'images/tif3.tif',
-        attributes : 'sampleAttribute3',
-        borderClass : '',
-        history: []
-      },
-      {
-        name : 'ImageName4',
-        src : 'images/tif3.tif',
-        attributes : 'sampleAttribute4',
-        borderClass : '',
-        history: []
-      }
+      // {
+      //   name : 'ImageName1',
+      //   src : 'images/tif1.tif',
+      //   attributes : 'sampleAttribute1',
+      //   borderClass : '',
+      //   history: []
+      // },
+      // {
+      //   name : 'ImageName2',
+      //   src : 'images/tif2.tif',
+      //   attributes : 'sampleAttribute2',
+      //   borderClass : '',
+      //   history: []
+      // },
+      // {
+      //   name : 'ImageName3',
+      //   src : 'images/tif3.tif',
+      //   attributes : 'sampleAttribute3',
+      //   borderClass : '',
+      //   history: []
+      // },
+      // {
+      //   name : 'ImageName4',
+      //   src : 'images/tif3.tif',
+      //   attributes : 'sampleAttribute4',
+      //   borderClass : '',
+      //   history: []
+      // }
     ];
 
     $scope.currentImage = {};
@@ -48,7 +47,7 @@
     };
 
 
-    $scope.decisionAction = function(currentIndex, nextIndex, decisionString, borderClass, username) {
+    $scope.decisionAction = function(imageName, currentIndex, nextIndex, decisionString, borderClass, username) {
       var date = new Date();
       var dateString = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
       var rowClass;
@@ -67,39 +66,44 @@
       };
       addToHistory(currentIndex, changeset);
       markAndNext(currentIndex, nextIndex, borderClass);
+      //Send to the other interfaces
+      var decisionObject = {
+        imageName: imageName,
+        changeset: changeset,
+        borderClass: borderClass
+      };
+      socket.emit('decision', decisionObject);
     };
 
     function addToHistory(currentIndex, changeset) {
       $scope.images[currentIndex].history.unshift(changeset);
-      var imageChangeset = {
-        currentIndex: currentIndex,
-        changeset: changeset
-      };
-      socket.emit('newChangeset', imageChangeset);
     }
-
-    socket.on('newChangeset', function(data) {
-      $scope.images[data.currentIndex].history.unshift(data.changeset);
-    });
 
     function markAndNext(currentIndex, nextIndex, borderClass) {
       $scope.images[currentIndex].borderClass = borderClass;
       $scope.setCurrentImage(nextIndex);
-      var markedObject = {
-        currentIndex: currentIndex,
-        borderClass: borderClass
-      };
-      socket.emit('imageMarked', markedObject);
     }
 
-    socket.on('imageMarked', function(data) {
-      $scope.images[data.currentIndex].borderClass = data.borderClass;
+    socket.on('decision', function(decisionObject) {
+      for (var i = 0; i < $scope.images.length; i++) {
+        if ($scope.images[i].name === decisionObject.imageName) {
+          $scope.images[i].history.unshift(decisionObject.changeset);
+          $scope.images[i].borderClass = decisionObject.borderClass;
+          break;
+        }
+      }
     });
 
-    socket.on('newFile', function(data) {
-      data.data.base64_file_buf = 'data:image/jpeg;base64,' + data.data.base64_file_buf;
-      $scope.images[0].src = data.data.base64_file_buf;
-      console.log(data);
+    socket.on('newFile', function(jsonstone) {
+      jsonstone.data.base64_file_buf = 'data:image/jpeg;base64,' + jsonstone.data.base64_file_buf;
+      $scope.images.push({
+        name: jsonstone.data.filename,
+        src: jsonstone.data.base64_file_buf,
+        attributes : 'Static attributes',
+        borderClass : '',
+        history: []
+      });
+      console.log(jsonstone);
     });
 
   }]);

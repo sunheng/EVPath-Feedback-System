@@ -11,7 +11,7 @@
   <script type="text/javascript" src="javascripts/controllers/dashboard_controllers.js"></script>
   <script type="text/javascript" src="javascripts/services/evpath_service.js"></script>
 </head>
-<body>
+<body ng-controller="ImageTilesCtrl">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -19,7 +19,7 @@
       </div>
 
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard <span class="badge">4</span></a></li>
+        <li class="active"><a href="#">Dashboard <span class="badge">{{images.length}}</span></a></li>
         <li><a href="#">Decision Tree</a></li>
       </ul>
       <p class="navbar-text navbar-right">
@@ -33,10 +33,11 @@
       <!-- <img alt="" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAsMAAAGhCAIAAAALOi7ZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QgLEhM6PUSGrwAAIABJREFUeNq8vcuSLEmWHKZ6jnlEZt5761Z3T/eAHAICAYRcEALsuOCWPzbzDfwP/gKXWJACoRDCBSkEBgPhADKY7qnu+4wIdztHuThmHh55q2t6ho+SlpaqyMwID3ez89CjqsY//dM//bM/+zMc/pGE3//PT/z09/1I0t/1Rz/x+o9+0I++vv/n8fU/8MW/9U9+9JVvL/v/u1cy86cv5ttfePXKq//8fTfhp+/qT3/oq8v+6V/+Ay/v25/+4X/46nqO"/> -->
     <!-- </div> -->
   <br>
-  <div ng-controller="ImageTilesCtrl">
+  <div>
     <div class="row">
       <div class="col-sm-3" ng-repeat="image in images">
-        <a href="#" data-toggle="modal" data-target="#imageModal" ng-click="setCurrentImage($index)">
+        <center><label>{{image.name}}</label></center>
+        <a href="#" title="Name" data-toggle="modal" data-target="#imageModal" ng-click="setCurrentImage($index)">
           <img ng-src="{{image.src}}" class="thumbnail thumbnailBorder img-responsive danger {{image.borderClass}}">
         </a>
       </div>
@@ -65,9 +66,9 @@
                         <img class="col-md-10 {{currentImage.borderClass}} thumbnail thumbnailBorder" ng-src="{{currentImage.src}}">
                         <div class="col-md-2">
                             <label class="col-md-12 stackingMargin">{{currentImage.attributes}}</label>
-                            <button type="button" class="btn btn-success col-md-12 stackingMargin" ng-click="decisionAction(currentIndex, nextIndex, 'Not an Error', 'greenBorder', '<%= user.username %>')">Not an Error</button>
-                            <button type="button" class="btn btn-warning col-md-12 stackingMargin" ng-click="decisionAction(currentIndex, nextIndex, 'Not Sure', 'yellowBorder', '<%= user.username %>')">Not Sure</button>
-                            <button type="button" class="btn btn-danger col-md-12 stackingMargin" ng-click="decisionAction(currentIndex, nextIndex, 'Error', 'redBorder', '<%= user.username %>')">Error</button>
+                            <button type="button" class="btn btn-success col-md-12 stackingMargin" ng-click="decisionAction(currentImage.name, currentIndex, nextIndex, 'Not an Error', 'greenBorder', '<%= user.username %>')">Not an Error</button>
+                            <button type="button" class="btn btn-warning col-md-12 stackingMargin" ng-click="decisionAction(currentImage.name, currentIndex, nextIndex, 'Not Sure', 'yellowBorder', '<%= user.username %>')">Not Sure</button>
+                            <button type="button" class="btn btn-danger col-md-12 stackingMargin" ng-click="decisionAction(currentImage.name, currentIndex, nextIndex, 'Error', 'redBorder', '<%= user.username %>')">Error</button>
                         </div>
                      </div>
                      <div class="tab-pane fade smallUpperMargin" id="history">
