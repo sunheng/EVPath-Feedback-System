@@ -2,7 +2,7 @@
   var dashboard = angular.module('dashboard', ['evpath_service']);
 
   dashboard.controller('ImageTilesCtrl', ['$scope', 'socket', function($scope, socket){
-    
+
     $scope.images = [
       // {
       //   name : 'ImageName1',
@@ -34,18 +34,39 @@
       // }
     ];
 
+    /* Scope set up for modal */
     $scope.currentImage = {};
     $scope.currentIndex = 0;
     $scope.nextIndex = 0;
     $scope.prevIndex = 0;
 
-    $scope.setCurrentImage = function(index) {
+    /* Set up for slicing array */
+    var DISPLAY_SIZE = 8;
+    $scope.sliceStart = 0;
+    $scope.sliceEnd = DISPLAY_SIZE;
+
+
+    $scope.setCurrentImage = function(imageName) {
+      var index = getIndexByName(imageName);
       $scope.currentImage = $scope.images[index];
       $scope.currentIndex = index;
       $scope.nextIndex = index + 1 == $scope.images.length ? 0 : index + 1;
       $scope.prevIndex = index - 1 < 0 ? $scope.images.length - 1 : index - 1;
     };
 
+    $scope.nextSet = function() {
+      if (($scope.images.length) - $scope.sliceStart > 8) {
+        $scope.sliceStart += DISPLAY_SIZE;
+        $scope.sliceEnd += DISPLAY_SIZE;
+      }
+    };
+
+    $scope.prevSet = function() {
+      if ($scope.sliceStart !== 0) {
+        $scope.sliceStart -= DISPLAY_SIZE;
+        $scope.sliceEnd -= DISPLAY_SIZE;
+      }
+    };
 
     $scope.decisionAction = function(imageName, currentIndex, nextIndex, decisionString, borderClass, username) {
       var date = new Date();
@@ -84,6 +105,14 @@
       $scope.setCurrentImage(nextIndex);
     }
 
+    function getIndexByName(imageName) {
+      for (var i = 0; i < $scope.images.length; i++) {
+        if ($scope.images[i].name === imageName) {
+          return i;
+        }
+      }
+      return -1;
+    }
     socket.on('decision', function(decisionObject) {
       for (var i = 0; i < $scope.images.length; i++) {
         if ($scope.images[i].name === decisionObject.imageName) {
@@ -103,8 +132,15 @@
         borderClass : '',
         history: []
       });
-      console.log(jsonstone);
+      // console.log(jsonstone);
     });
 
   }]);
+
+  dashboard.filter('slice', function() {
+    return function(arr, start, end) {
+      return arr.slice(start, end);
+    };
+  });
+
 })();
