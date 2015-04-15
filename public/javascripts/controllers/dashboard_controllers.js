@@ -46,8 +46,10 @@
     $scope.sliceEnd = DISPLAY_SIZE;
 
 
-    $scope.setCurrentImage = function(imageName) {
-      var index = getIndexByName(imageName);
+    $scope.setCurrentImage = function(imageName, index) {
+      if (index === null) {
+        index = getIndexByName(imageName);
+      }
       $scope.currentImage = $scope.images[index];
       $scope.currentIndex = index;
       $scope.nextIndex = index + 1 == $scope.images.length ? 0 : index + 1;
@@ -102,7 +104,7 @@
 
     function markAndNext(currentIndex, nextIndex, borderClass) {
       $scope.images[currentIndex].borderClass = borderClass;
-      $scope.setCurrentImage(nextIndex);
+      $scope.setCurrentImage(null, nextIndex);
     }
 
     function getIndexByName(imageName) {
@@ -132,7 +134,6 @@
         borderClass : '',
         history: []
       });
-      // console.log(jsonstone);
     });
 
   }]);

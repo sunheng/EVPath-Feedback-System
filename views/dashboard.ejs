@@ -48,7 +48,7 @@
     <div class="row">
       <div class="col-sm-3" ng-repeat="image in images | slice:sliceStart:sliceEnd">
         <center><label>{{image.name}}</label></center>
-        <a href="#" title="Name" data-toggle="modal" data-target="#imageModal" ng-click="setCurrentImage(image.name)">
+        <a href="#" title="Name" data-toggle="modal" data-target="#imageModal" ng-click="setCurrentImage(image.name, null)">
           <img ng-src="{{image.src}}" class="thumbnail thumbnailBorder img-responsive danger {{image.borderClass}}">
         </a>
       </div>
@@ -58,8 +58,8 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="btn btn-default" ng-click="setCurrentImage(prevIndex)">Previous</button>
-                <button type="button" class="btn btn-primary" ng-click="setCurrentImage(nextIndex)">Next</button>
+                <button type="button" class="btn btn-default" ng-click="setCurrentImage(null, prevIndex)">Previous</button>
+                <button type="button" class="btn btn-primary" ng-click="setCurrentImage(null, nextIndex)">Next</button>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <center><h4 class="modal-title" id="myModalLabel">{{currentImage.name}}</h4></center>
               </div>

@@ -25,7 +25,7 @@ module.exports = function (app, passport) {
     // console.log(req.user);
     //Expose only non confidential information to the client
     var externalUser = {
-      username: req.user.local.username
+      username: req.user.username
     };
     res.render('dashboard.ejs', { user: externalUser});
   });

@@ -1,9 +1,10 @@
 var express     = require('express');
 var app         = express();
 var port        = process.env.PORT || 3000;
-var mongoose    = require('mongoose');
+// var mongoose    = require('mongoose');
 var passport    = require('passport');
 var flash       = require('connect-flash');
+var redis       = require('redis');
 
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -12,16 +13,29 @@ var session      = require('express-session');
 
 var io = require('socket.io').listen(app.listen(port));
 
-// db connection
-var configDB = require('./config/database.js');
-mongoose.connect(configDB.url);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
-  console.log('DB Connected');
+// mongodb connection
+// var configDB = require('./config/database.js');
+// mongoose.connect(configDB.url);
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// db.once('open', function (callback) {
+//   console.log('DB Connected');
+// });
+
+// redis connection
+var dbHost = '127.0.0.1';
+var dbPort = 6379;
+var redisClient = redis.createClient(dbPort, dbHost);
+redisClient.on('connect', function() {
+  console.log('redis connected');
 });
 
-require('./config/passport')(passport); // pass passport for configuration
+// redisClient.hmset('myhashset2', 'username', 'myusername', 'password', 'mypassword');
+// redisClient.hmget('myhashset2', ['username', 'password'], function(err, reply) {
+//     console.log(reply);
+// });
+
+require('./config/passport')(passport, redisClient); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
