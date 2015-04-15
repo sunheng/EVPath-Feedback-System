@@ -23,9 +23,8 @@ var io = require('socket.io').listen(app.listen(port));
 // });
 
 // redis connection
-var dbHost = '127.0.0.1';
-var dbPort = 6379;
-var redisClient = redis.createClient(dbPort, dbHost);
+var dbConfig = require('./config/database');
+var redisClient = redis.createClient(dbConfig.port, dbConfig.host);
 redisClient.on('connect', function() {
   console.log('redis connected');
 });
@@ -35,6 +34,9 @@ redisClient.on('connect', function() {
 //     console.log(reply);
 // });
 
+
+/* TODO: Create separate db layer*/
+var data_handler = require('./data_access/access_handler')(redisClient);
 require('./config/passport')(passport, redisClient); // pass passport for configuration
 
 // set up our express application
