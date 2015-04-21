@@ -34,9 +34,6 @@ redisClient.on('connect', function() {
 //     console.log(reply);
 // });
 
-
-/* TODO: Create separate db layer*/
-var data_handler = require('./data_access/access_handler')(redisClient);
 require('./config/passport')(passport, redisClient); // pass passport for configuration
 
 // set up our express application
@@ -61,4 +58,6 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 var routes = require('./routes')(app, passport);
 
-var events = require('./dashboard_service/sockets')(io);
+/* DB layer */
+var data_handler = require('./data_access/access_handler')(redisClient);
+var events = require('./dashboard_service/sockets')(io, data_handler);

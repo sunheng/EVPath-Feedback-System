@@ -4,31 +4,11 @@
   dashboard.controller('ImageTilesCtrl', ['$scope', 'socket', function($scope, socket){
 
     $scope.images = [
+      // Sample structure
       // {
       //   name : 'ImageName1',
       //   src : 'images/tif1.tif',
       //   attributes : 'sampleAttribute1',
-      //   borderClass : '',
-      //   history: []
-      // },
-      // {
-      //   name : 'ImageName2',
-      //   src : 'images/tif2.tif',
-      //   attributes : 'sampleAttribute2',
-      //   borderClass : '',
-      //   history: []
-      // },
-      // {
-      //   name : 'ImageName3',
-      //   src : 'images/tif3.tif',
-      //   attributes : 'sampleAttribute3',
-      //   borderClass : '',
-      //   history: []
-      // },
-      // {
-      //   name : 'ImageName4',
-      //   src : 'images/tif3.tif',
-      //   attributes : 'sampleAttribute4',
       //   borderClass : '',
       //   history: []
       // }
@@ -126,10 +106,11 @@
     });
 
     socket.on('newFile', function(jsonstone) {
-      jsonstone.data.base64_file_buf = 'data:image/jpeg;base64,' + jsonstone.data.base64_file_buf;
+      var imageName = jsonstone.data.filename;
+      var imgSrc = 'data:image/jpeg;base64,' + jsonstone.data.base64_file_buf;
       $scope.images.push({
-        name: jsonstone.data.filename,
-        src: jsonstone.data.base64_file_buf,
+        name: imageName,
+        src: imgSrc,
         attributes : 'Static attributes',
         borderClass : '',
         history: []

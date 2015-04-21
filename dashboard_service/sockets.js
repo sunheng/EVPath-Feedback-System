@@ -1,12 +1,14 @@
-module.exports = function(io) {
+module.exports = function(io, data_handler) {
   var net = require('net');
   var client = new net.Socket();
 
   io.on('connection', function (socket) {
     console.log('connected to socket.io');
 
-    socket.on('decision', function(data) {
-      socket.broadcast.emit('decision', data);
+    socket.on('decision', function(decisionObject) {
+      // Add the decision to the database
+      data_handler.addToHistory(decisionObject);
+      socket.broadcast.emit('decision', decisionObject);
     });
 
     var client = new net.Socket();
@@ -20,7 +22,6 @@ module.exports = function(io) {
       try {
         var received = JSON.parse(data);
         data = '';
-        console.log(received);
         socket.emit('newFile', received);
       } catch (e) {
 
