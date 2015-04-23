@@ -106,6 +106,7 @@
     });
 
     socket.on('newFile', function(jsonstone) {
+      console.log('newfile!');
       var imageName = jsonstone.data.filename;
       var imgSrc = 'data:image/jpeg;base64,' + jsonstone.data.base64_file_buf;
       $scope.images.push({

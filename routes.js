@@ -22,7 +22,6 @@ module.exports = function (app, passport) {
 
   // Dashboard page
   app.get('/dashboard', isLoggedIn, function(req, res) {
-    // console.log(req.user);
     //Expose only non confidential information to the client
     var externalUser = {
       username: req.user.username
@@ -38,9 +37,7 @@ module.exports = function (app, passport) {
 };
 
 function isLoggedIn(req, res, next) {
-    // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
         return next();
-    // if they aren't redirect them to the home page
     res.redirect('/');
 }

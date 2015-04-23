@@ -1,7 +1,6 @@
 var express     = require('express');
 var app         = express();
 var port        = process.env.PORT || 3000;
-// var mongoose    = require('mongoose');
 var passport    = require('passport');
 var flash       = require('connect-flash');
 var redis       = require('redis');
@@ -13,26 +12,12 @@ var session      = require('express-session');
 
 var io = require('socket.io').listen(app.listen(port));
 
-// mongodb connection
-// var configDB = require('./config/database.js');
-// mongoose.connect(configDB.url);
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.once('open', function (callback) {
-//   console.log('DB Connected');
-// });
-
 // redis connection
 var dbConfig = require('./config/database');
 var redisClient = redis.createClient(dbConfig.port, dbConfig.host);
 redisClient.on('connect', function() {
   console.log('redis connected');
 });
-
-// redisClient.hmset('myhashset2', 'username', 'myusername', 'password', 'mypassword');
-// redisClient.hmget('myhashset2', ['username', 'password'], function(err, reply) {
-//     console.log(reply);
-// });
 
 require('./config/passport')(passport, redisClient); // pass passport for configuration
 

@@ -1,8 +1,4 @@
 var LocalStrategy = require('passport-local').Strategy;
-
-// load up the user model
-//var User = require('../models/user');
-
 /* TODO: Hash passwords */
 
 var userSet = '';
@@ -69,7 +65,6 @@ module.exports = function(passport, redisClient) {
                 if (err) {
                     return done(err);
                 }
-                // Not a current user - do the adding
                 if (reply[0] === null) {
                     redisClient.hmset(userKey, 'username', username, 'password', password);
                     return done(null, userKey);
